@@ -63,4 +63,4 @@ def generateMusic(generator, notes_to_ints, n_pieces=5):
         seq_to_midi(pred_notes, 'outputs/generated_' + str(i))
 
 
-train(dataset_path=DATASET_PATH, latent_dim=LATENT_DIMENSION, epochs=40, batch_size=64)
+train(dataset_path=DATASET_PATH, latent_dim=LATENT_DIMENSION, epochs=10, batch_size=32)

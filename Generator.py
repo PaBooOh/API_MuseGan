@@ -5,14 +5,14 @@ from keras.layers import LSTM, Bidirectional, BatchNormalization, Reshape, Dense
 
 class Generator:
     
-    def __init__(self, seq_length=SEQUENCE_LENGTH, input_shape=SEQUENCE_SHAPE):
+    def __init__(self, seq_length=SEQUENCE_LENGTH, output_shape=SEQUENCE_SHAPE):
         self.seq_length = seq_length
-        self.input_shape = input_shape
+        self.output_shape = output_shape
     
     def buildGenerator(self):
         generator = Sequential(
         [
-            LSTM(512, input_shape=self.input_shape, return_sequences=True),
+            LSTM(512, input_shape=(LATENT_DIMENSION, 1), return_sequences=True),
             Bidirectional(LSTM(512)),
             Dense(256),
             LeakyReLU(alpha=0.2),
@@ -24,7 +24,7 @@ class Generator:
             LeakyReLU(alpha=0.2),
             BatchNormalization(momentum=0.8),
             Dense(self.seq_length, activation='tanh'),
-            Reshape(self.input_shape)
+            Reshape(self.output_shape)
 
         ]
     )

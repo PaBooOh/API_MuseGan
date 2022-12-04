@@ -34,7 +34,7 @@ def makeData(dataset_path=DATASET_PATH):
     notes_names = getNotesNames(notes)
     notes_to_ints = notesNames2ints(notes_names)
     for i in range(0, len(notes) - SEQUENCE_LENGTH):
-        trained_data.append([notes_to_ints[char] for char in notes[i:i + SEQUENCE_LENGTH]])
+        trained_data.append([notes_to_ints[chr] for chr in notes[i:i + SEQUENCE_LENGTH]])
     
     trained_data = np.array(trained_data)
     trained_data = (trained_data - float(len(notes)) / 2) / (float(len(notes)) / 2)
@@ -45,9 +45,10 @@ def processChords(chords_str):
     notes = []
     for note_str in chords:
         note_obj = music21.note.Note(note_str)
-        note_obj.storedInstrument = music21.instrument.Violin()
+        note_obj.storedInstrument = music21.instrument.Piano()
         notes.append(note_obj)
     return notes
+
 def seq_to_midi(sequence, filename):
     # Generate pieces of music with well-trained generator then transform them into midi
     offset = 0
@@ -59,16 +60,15 @@ def seq_to_midi(sequence, filename):
         elif ('.' in note) or note.isdigit():
             chord = processChords(note)
             chord_obj = music21.chord.Chord(chord)
-            # chord_obj.offset = offset
+            chord_obj.offset = offset
             stream.append(chord_obj)
         # note
         else:
             note_obj = music21.note.Note(note)
-            # new_note.offset = offset
-            note_obj.storedInstrument = music21.instrument.Violin()
+            note_obj.offset = offset
+            note_obj.storedInstrument = music21.instrument.Piano()
             stream.append(note_obj)
 
-        # offset += 0.5
+        offset += 0.5
 
-    # midi_stream.show('text')
     stream.write('midi', fp=f'{filename}.midi')
