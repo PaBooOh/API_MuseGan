@@ -5,7 +5,7 @@ from keras.layers import LSTM, Bidirectional, BatchNormalization, Reshape, Dense
 
 class Generator:
     
-    def __init__(self, seq_length=SEQUENCE_LENGTH, output_shape=SEQUENCE_SHAPE):
+    def __init__(self, seq_length=SEQUENCE_LENGTH, output_shape=OUTPUT_SHAPE):
         self.seq_length = seq_length
         self.output_shape = output_shape
     
