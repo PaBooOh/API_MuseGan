@@ -16,7 +16,7 @@ def extractFeatures(dataset_path=DATASET_PATH):
         midi_files =  glob.glob(f"{dataset_path}/*.midi")
         notes = []
         for midi_file in midi_files:
-            piece = music21.converter.parse(midi_file) # stream.score
+            piece = music21.converter.parse(midi_file)
             for element in piece.flatten().elements:
                 if isinstance(element, music21.note.Rest) and element.offset != 0:
                     notes.append('R')
