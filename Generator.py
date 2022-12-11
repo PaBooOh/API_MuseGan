@@ -24,6 +24,7 @@ class Generator:
             LeakyReLU(alpha=0.2),
             BatchNormalization(momentum=0.8),
             Dense(self.seq_length, activation='tanh'),
+            Reshape(self.output_shape)
         ]
     )
         return generator
@@ -31,15 +32,23 @@ class Generator:
     def buildGenerator_LSTM(self):
         generator = Sequential(
         [
-            LSTM(512, input_shape=(LATENT_DIMENSION, 1), return_sequences=True),
-            Dropout(0.4),
-            LSTM(512, return_sequences=True),
-            Dropout(0.4),
-            LSTM(512, return_sequences=True),
-            Dense(512),
-            Dropout(0.4),
-            Dense(self.seq_length, activation='softmax'),
+            Dense(512, input_dim=LATENT_DIMENSION),
+            LeakyReLU(alpha=0.2),
+            BatchNormalization(momentum=0.8),
+            Dense(1024),
+            LeakyReLU(alpha=0.2),
+            BatchNormalization(momentum=0.8),
+            # Dropout(0.3),
+            Dense(self.seq_length, activation='tanh'),
             Reshape(self.output_shape)
+            # LSTM(512, input_shape=(LATENT_DIMENSION, 1), return_sequences=True),
+            # Dropout(0.4),
+            # LSTM(512, return_sequences=True),
+            # Dropout(0.4),
+            # LSTM(512, return_sequences=True),
+            # Dense(512),
+            # Dropout(0.4),
+            # Dense(self.seq_length, activation='softmax'),
         ]
     )
         return generator

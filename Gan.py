@@ -13,10 +13,12 @@ class Gan:
     def build_gan(self):
         generator_obj = Generator(self.seq_length, self.seq_shape)
         discriminator_obj = Discriminator(self.seq_shape)
-        # generator = generator_obj.buildGenerator_BiLSTM()
-        # discriminator = discriminator_obj.buildDiscriminator_BiLSTM()
-        generator = generator_obj.buildGenerator_LSTM()
-        discriminator = discriminator_obj.buildDiscriminator_LSTM()
+        if BUILT_WITH_BILSTM:
+            generator = generator_obj.buildGenerator_BiLSTM()
+            discriminator = discriminator_obj.buildDiscriminator_BiLSTM()
+        else:
+            generator = generator_obj.buildGenerator_LSTM()
+            discriminator = discriminator_obj.buildDiscriminator_LSTM()
         discriminator.compile(loss='binary_crossentropy', optimizer=OPT, metrics=['accuracy'])
         discriminator.trainable = False # Only train generator
         pred = discriminator(generator.output)

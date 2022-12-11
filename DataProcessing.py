@@ -36,7 +36,8 @@ def makeData(dataset_path=DATASET_PATH):
     notes_names = buildPitchesVocabulary(notes)
     notes_to_ints = notesNames2ints(notes_names)
     for i in range(0, len(notes) - SEQUENCE_LENGTH):
-        trained_data.append([notes_to_ints[chr] for chr in notes[i:i + SEQUENCE_LENGTH]])
+        piece = [notes_to_ints[chr] for chr in notes[i:i + SEQUENCE_LENGTH]]
+        trained_data.append(piece)
     
     trained_data = np.array(trained_data)
     trained_data = (trained_data - float(len(notes)) / 2) / (float(len(notes)) / 2)
