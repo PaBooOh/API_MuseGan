@@ -45,7 +45,6 @@ def train(dataset_path=DATASET_PATH, latent_dim=LATENT_DIMENSION, epochs=20, bat
             X_noises = generateNoises(batch_size, latent_dim)
             Y_noises = np.ones([batch_size, 1])
             generator_loss = gan.train_on_batch(X_noises, Y_noises)
-            # if epoch % 2 == 0:
             print("| Epoch: %d | Discriminator loss: %.3f, accuracy: %.2f%% | Generator loss: %.3f |" % (epoch, d_loss[0], 100*d_loss[1], generator_loss))
         
         # Generate several pieces of music
@@ -63,4 +62,4 @@ def generateMusic(generator, notes_to_ints, n_pieces=5):
         seq_to_midi(pred_notes, 'outputs/generated_' + str(i))
 
 
-train(dataset_path=DATASET_PATH, latent_dim=LATENT_DIMENSION, epochs=10, batch_size=32)
+train(dataset_path=DATASET_PATH, latent_dim=LATENT_DIMENSION, epochs=TRAIN_EPOCHS, batch_size=TRAIN_BATCH_SIZE)

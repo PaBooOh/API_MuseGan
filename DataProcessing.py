@@ -2,7 +2,7 @@ import music21
 import numpy as np
 from Config import *
 
-def getNotesNames(notes):
+def buildPitchesVocabulary(notes):
     return sorted(set(note for note in notes))
 
 def notesNames2ints(notes_names):
@@ -23,6 +23,9 @@ def extractFeatures(dataset_path=DATASET_PATH):
                 if isinstance(element, music21.note.Note):
                     notes.append(str(element.pitch))
                 if isinstance(element, music21.chord.Chord):
+                    # print(element)
+                    # print(','.join(str(pitch) for pitch in element.pitches))
+                    # print()
                     notes.append(','.join(str(pitch) for pitch in element.pitches))
 
         return notes
@@ -30,7 +33,7 @@ def extractFeatures(dataset_path=DATASET_PATH):
 def makeData(dataset_path=DATASET_PATH):
     trained_data = []
     notes = extractFeatures(dataset_path)
-    notes_names = getNotesNames(notes)
+    notes_names = buildPitchesVocabulary(notes)
     notes_to_ints = notesNames2ints(notes_names)
     for i in range(0, len(notes) - SEQUENCE_LENGTH):
         trained_data.append([notes_to_ints[chr] for chr in notes[i:i + SEQUENCE_LENGTH]])

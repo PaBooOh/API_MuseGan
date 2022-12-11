@@ -1,6 +1,6 @@
 from Config import *
 from keras.models import Sequential
-from keras.layers import LSTM, Bidirectional, BatchNormalization, Reshape, Dense, LeakyReLU
+from keras.layers import LSTM, Bidirectional, BatchNormalization, Reshape, Dense, LeakyReLU, Dropout
 
 
 class Generator:
@@ -9,7 +9,7 @@ class Generator:
         self.seq_length = seq_length
         self.output_shape = output_shape
     
-    def buildGenerator(self):
+    def buildGenerator_BiLSTM(self):
         generator = Sequential(
         [
             LSTM(512, input_shape=(LATENT_DIMENSION, 1), return_sequences=True),
@@ -24,8 +24,22 @@ class Generator:
             LeakyReLU(alpha=0.2),
             BatchNormalization(momentum=0.8),
             Dense(self.seq_length, activation='tanh'),
+        ]
+    )
+        return generator
+    
+    def buildGenerator_LSTM(self):
+        generator = Sequential(
+        [
+            LSTM(512, input_shape=(LATENT_DIMENSION, 1), return_sequences=True),
+            Dropout(0.4),
+            LSTM(512, return_sequences=True),
+            Dropout(0.4),
+            LSTM(512, return_sequences=True),
+            Dense(512),
+            Dropout(0.4),
+            Dense(self.seq_length, activation='softmax'),
             Reshape(self.output_shape)
-
         ]
     )
         return generator
