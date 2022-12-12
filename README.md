@@ -5,27 +5,27 @@ The dataset file contains nearly 100 midi format music files for model training.
 
 ## Project structure
 
-> Generator.py
+> __Generator.py__
 >
 >> Define the generator model with Full connection layer/Bi-LSTM
 
-> Discriminator.py
+> __Discriminator.py__
 >
 >> Define the discriminator model with LSTM/Bi-LSTM
 
-> Gan.py
+> __Gan.py__
 >
 >> Define the GAN model that assemble the generator and discriminator models defined above
 
-> DataProcessing.py
+> __DataProcessing.py__
 >
 >> Define some methods that extract features from music (MIDI files) to sequence, and that transform sequence generated to music (MIDI files)
 
-> Train.py
+> __Train.py__
 > 
 >> Traning the GAN model to generate music
 
-> Config.py
+> __Config.py__
 >
 >> Configuration of (hyper)parameters
 
