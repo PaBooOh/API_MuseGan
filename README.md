@@ -7,6 +7,28 @@ The dataset file contains nearly 100 midi format music files for model training.
 
 > Generator.py
 >
->> Define the generator model with LSTM/Bi-LSTM
+>> Define the generator model with Full connection layer/Bi-LSTM
 
 > Discriminator.py
+>
+>> Define the discriminator model with LSTM/Bi-LSTM
+
+> Gan.py
+>
+>> Define the GAN model that assemble the generator and discriminator models defined above
+
+> DataProcessing.py
+>
+>> Define some methods that extract features from music (MIDI files) to sequence, and that transform sequence generated to music (MIDI files)
+
+> Train.py
+> 
+>> Traning the GAN model to generate music
+
+> Config.py
+>
+>> Configuration of (hyper)parameters
+
+## Run
+By executing __python train.py__ you could observe the generator model and discriminator model both get improved. After training, N_MUSIC MIDI FILES generated from generator would created automatically to your local disk.
+
